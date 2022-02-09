@@ -6,11 +6,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class AccueilController extends AbstractController
+class EntreeController extends AbstractController
 {
-    #[Route('/accueil', name: 'accueil')]
+    #[Route('/Entree/liste', name: 'entree_liste')]
     public function index(): Response
     {
-        return $this->render('accueil.html.twig');
+        return $this->render('entree/liste.html.twig');
     }
 }
