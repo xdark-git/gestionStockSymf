@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Produit;
+use Doctrine\Persistence\ManagerRegistry;
 
 class ProduitController extends AbstractController
 {
@@ -15,20 +16,20 @@ class ProduitController extends AbstractController
         return $this->render('produit/liste.html.twig');
     }
 
-    // #[Route('/Produit/get/{$id}', name: 'produit_get')]
-    // public function getProduit($id): Response
-    // {
-    //     return $this->render('produit/liste.html.twig');
-    // }
+    #[Route('/Produit/get/{$id}', name: 'produit_get')]
+    public function getProduit($id): Response
+    {
+        return $this->render('produit/liste.html.twig');
+    }
 
-    #[Route('/Produit/add', name: 'produit_liste')]
-    public function add()
+    #[Route('/Produit/add', name: 'produit_add')]
+    public function add(ManagerRegistry $doctrine)
     {
         $p = new Produit();
-        $p->setLibelle(libelle: "Scanner");
+        $p->setLibelle(libelle: "Clavier");
         $p->setQtStock(qtStock:0.0);
 
-        $em = $this->getManager();
+        $em = $doctrine->getManager();
         $em->persist($p);
         $em->flush();
         return $this->render('produit/liste.html.twig');
