@@ -11,9 +11,12 @@ use Doctrine\Persistence\ManagerRegistry;
 class ProduitController extends AbstractController
 {
     #[Route('/Produit/liste', name: 'produit_liste')]
-    public function index(): Response
+    public function index(ManagerRegistry $doctrine): Response
     {
-        return $this->render('produit/liste.html.twig');
+        $em = $doctrine->getManager();
+        $data['produits'] = $em->getRepository(Produit::class)->findAll();
+
+        return $this->render('produit/liste.html.twig', $data);
     }
 
     #[Route('/Produit/get/{$id}', name: 'produit_get')]
