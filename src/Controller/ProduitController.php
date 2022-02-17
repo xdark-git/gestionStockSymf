@@ -5,8 +5,11 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use App\Entity\Produit;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Persistence\ManagerRegistry;
+use App\Form\ProduitType;
+use App\Entity\Produit;
 
 class ProduitController extends AbstractController
 {
@@ -14,8 +17,14 @@ class ProduitController extends AbstractController
     public function index(ManagerRegistry $doctrine): Response
     {
         $em = $doctrine->getManager();
-        $data['produits'] = $em->getRepository(Produit::class)->findAll();
 
+        $p = new Produit();
+        $form = $this->createForm(ProduitType::class, $p, 
+                                    array('action' => $this->generateUrl('entree_add'),
+                                ));
+        $data['form'] = $form->createView();
+
+        $data['produits'] = $em->getRepository(Produit::class)->findAll();
         return $this->render('produit/liste.html.twig', $data);
     }
 
@@ -26,15 +35,20 @@ class ProduitController extends AbstractController
     }
 
     #[Route('/Produit/add', name: 'produit_add')]
-    public function add(ManagerRegistry $doctrine)
+    public function add(ManagerRegistry $doctrine, Request $request)
     {
         $p = new Produit();
-        $p->setLibelle(libelle: "Clavier");
-        $p->setQtStock(qtStock:0.0);
+        $form = $this->createForm(ProduitType::class, $p);
+        
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) 
+        {
+            $p = $form->getData();
 
-        $em = $doctrine->getManager();
-        $em->persist($p);
-        $em->flush();
-        return $this->render('produit/liste.html.twig');
+            $em = $doctrine->getManager();
+            $em->persist($p);
+            $em->flush();
+        }
+        return $this->redirectToRoute('produit_liste');
     }
 }
