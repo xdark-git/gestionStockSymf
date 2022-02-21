@@ -20,7 +20,7 @@ class ProduitController extends AbstractController
 
         $p = new Produit();
         $form = $this->createForm(ProduitType::class, $p, 
-                                    array('action' => $this->generateUrl('entree_add'),
+                                    array('action' => $this->generateUrl('produit_add'),
                                 ));
         $data['form'] = $form->createView();
 
@@ -41,7 +41,7 @@ class ProduitController extends AbstractController
         $form = $this->createForm(ProduitType::class, $p);
         
         $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) 
+        if ($form->isValid()) 
         {
             $p = $form->getData();
 

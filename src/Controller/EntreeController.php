@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Persistence\ManagerRegistry;
 use App\Form\EntreeType;
 use App\Entity\Entree;
+use App\Entity\Produit;
 
 class EntreeController extends AbstractController
 {
@@ -32,6 +33,7 @@ class EntreeController extends AbstractController
     public function add(ManagerRegistry $doctrine, Request $request)
     {
         $e = new Entree();
+        $p = new Produit();
         $form = $this->createForm(EntreeType::class, $e);
         
         $form->handleRequest($request);
@@ -41,6 +43,11 @@ class EntreeController extends AbstractController
 
             $em = $doctrine->getManager();
             $em->persist($e);
+            $em->flush();
+            //Mise à jour des produits
+            $p = $em->getRepository(Produit::class)->find($e->getProduit()->getId());
+            $stock = $p->getQtStock() + $e->getQtE();
+            $p->setQtStock($stock);
             $em->flush();
         }
         return $this->redirectToRoute('entree_liste');
