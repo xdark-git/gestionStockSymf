@@ -27,6 +27,9 @@ class Produit
     #[ORM\OneToMany(mappedBy: 'produit', targetEntity: Sortie::class, orphanRemoval: true)]
     private $sorties;
 
+    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'produits')]
+    private $user;
+
     public function __construct()
     {
         $this->entrees = new ArrayCollection();
@@ -125,5 +128,17 @@ class Produit
     public function __toString()
     {
         return $this->libelle;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
+
+        return $this;
     }
 }

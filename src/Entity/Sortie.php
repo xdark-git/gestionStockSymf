@@ -23,6 +23,9 @@ class Sortie
     #[ORM\JoinColumn(nullable: false)]
     private $produit;
 
+    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'sorties')]
+    private $user;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -60,6 +63,18 @@ class Sortie
     public function setProduit(?Produit $produit): self
     {
         $this->produit = $produit;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }
