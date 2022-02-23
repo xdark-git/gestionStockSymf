@@ -38,7 +38,7 @@ security:
         - { path: ^/Produit/liste$, roles: ROLE_GESTION_STOCK }
         - { path: ^/Entree/liste$, roles: ROLE_GESTION_STOCK }
         - { path: ^/Sortie/liste$, roles: ROLE_VENDEUR }
-        - { path: ^/login$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+       # - { path: ^/login$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
 
 when@test:
     security:
