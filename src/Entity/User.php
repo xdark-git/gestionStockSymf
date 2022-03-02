@@ -38,6 +38,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Sortie::class)]
     private $sorties;
 
+    #[ORM\Column(type: 'string', length: 200)]
+    private $nom;
+
+    #[ORM\Column(type: 'string', length: 150)]
+    private $prenom;
+
     public function __construct()
     {
         $this->roles = new ArrayCollection();
@@ -218,6 +224,30 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $sorty->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getNom(): ?string
+    {
+        return $this->nom;
+    }
+
+    public function setNom(string $nom): self
+    {
+        $this->nom = $nom;
+
+        return $this;
+    }
+
+    public function getPrenom(): ?string
+    {
+        return $this->prenom;
+    }
+
+    public function setPrenom(string $prenom): self
+    {
+        $this->prenom = $prenom;
 
         return $this;
     }
