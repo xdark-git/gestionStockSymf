@@ -21,7 +21,7 @@ class RegistrationFormType extends AbstractType
             ->add('prenom')
             ->add('nom')
             ->add('email')
-            // ->add('roles', ChoiceType::class)
+            // ->add('roles') -> trying to add roles in the form but not working
             ->add('agreeTerms', CheckboxType::class, [
                 'mapped' => false,
                 'constraints' => [
