@@ -16,6 +16,8 @@ class ProduitController extends AbstractController
     #[Route('/Produit/liste', name: 'produit_liste')]
     public function index(ManagerRegistry $doctrine): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_USER');
+        
         $em = $doctrine->getManager();
 
         $p = new Produit();

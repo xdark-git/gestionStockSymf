@@ -31,7 +31,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $password;
 
     #[ORM\ManyToMany(targetEntity: Roles::class, inversedBy: 'users')]
-    private $roles;
+    private $roles = [];
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Produit::class)]
     private $produits;
