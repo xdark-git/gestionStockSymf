@@ -90,7 +90,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         $roles = array();//$this->roles;
         // guarantee every user at least has ROLE_USER
-        $roles[] = 'ROLE_USER';
+
+        // foreach to acces role in database
+        // $roles[] = 'ROLE_USER';
+        array_push($roles, 'ROLE_USER');
+        foreach($this->roles as $r)
+        {
+            $roles[] = $r->getNom();
+        }
 
         return array_unique($roles);
     }

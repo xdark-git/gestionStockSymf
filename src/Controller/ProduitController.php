@@ -10,13 +10,14 @@ use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Persistence\ManagerRegistry;
 use App\Form\ProduitType;
 use App\Entity\Produit;
+use App\Entity\User;
 
 class ProduitController extends AbstractController
 {
     #[Route('/Produit/liste', name: 'produit_liste')]
     public function index(ManagerRegistry $doctrine): Response
     {
-        $this->denyAccessUnlessGranted('ROLE_USER');
+        // $this->denyAccessUnlessGranted('ROLE_USER');
         
         $em = $doctrine->getManager();
 
