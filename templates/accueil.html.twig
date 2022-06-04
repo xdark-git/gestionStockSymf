@@ -122,7 +122,7 @@
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{app.user ? app.user.prenom : ""}} {{app.user ? app.user.nom : ""}}</span>
                                 <img class="img-profile rounded-circle"
                                     src="{{ asset('accueil/img/undraw_profile.svg')}}">
                             </a>
@@ -148,7 +148,12 @@
                         <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
                     </div>
                     <!--================= block ici ===================-->
+                    {# this block will be deleted, it's here just for testing #}
                      {% block body %}{% endblock %}
+
+                     {% for user in app.user.roles %}
+                    <li>{{ user}}</li>
+                    {% endfor %}
                 </div>
             </div>
             <!-- End of Main Content -->
@@ -187,10 +192,10 @@
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
-                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-body">Cliquer sur "se déconnecter" si vous voulez arreter la session.</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="login.html">Logout</a>
+                    <a class="btn btn-primary" href="/logout">Se déconnecter</a>
                 </div>
             </div>
         </div>
