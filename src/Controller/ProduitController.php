@@ -41,16 +41,20 @@ class ProduitController extends AbstractController
     public function add(ManagerRegistry $doctrine, Request $request)
     {
         $p = new Produit();
+
         $form = $this->createForm(ProduitType::class, $p);
         
         $form->handleRequest($request);
-        if ($form->isValid()) 
-        {
-            $p = $form->getData();
+        if($form->isSubmitted()){
+            if ($form->isValid()) 
+            {
 
-            $em = $doctrine->getManager();
-            $em->persist($p);
-            $em->flush();
+                $p = $form->getData();
+
+                $em = $doctrine->getManager();
+                $em->persist($p);
+                $em->flush();
+            }
         }
         return $this->redirectToRoute('produit_liste');
     }
